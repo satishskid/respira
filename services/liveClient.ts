@@ -75,7 +75,7 @@ export class LiveClient {
           systemInstruction: getSystemInstruction(preferences, routineMode),
           outputAudioTranscription: {}, 
           inputAudioTranscription: {},  
-          tools: tools,
+          tools: [tools] as any,
         },
         callbacks: {
           onopen: () => {
@@ -141,7 +141,7 @@ export class LiveClient {
 
     const serverContent = message.serverContent;
 
-    if (message.toolCall) {
+    if (message.toolCall && message.toolCall.functionCalls) {
       for (const fc of message.toolCall.functionCalls) {
         if (fc.name === 'setBreathingExercise') {
           const args = fc.args as any;

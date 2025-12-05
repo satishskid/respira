@@ -73,44 +73,42 @@ export const HEALTH_CONDITIONS: { id: HealthCondition; label: string; warning: s
   { id: 'epilepsy', label: 'Epilepsy / Seizures', warning: 'Avoid hyperventilation techniques.' },
 ];
 
-export const tools = [
-  {
-    functionDeclarations: [
-      {
-        name: 'setBreathingExercise',
-        description: 'Set the current breathing exercise name and pattern details to display to the user.',
-        parameters: {
-          type: Type.OBJECT,
-          properties: {
-            name: {
-              type: Type.STRING,
-              description: 'The name of the breathing technique (e.g., "Box Breathing", "Nadi Shodhana").',
-            },
-            pattern: {
-              type: Type.STRING,
-              description: 'The breathing pattern (e.g., "Inhale 4s, Hold 4s, Exhale 4s, Hold 4s" or "Inhale Left, Exhale Right").',
-            },
+export const tools = {
+  functionDeclarations: [
+    {
+      name: 'setBreathingExercise',
+      description: 'Set the current breathing exercise name and pattern details to display to the user.',
+      parameters: {
+        type: Type.OBJECT,
+        properties: {
+          name: {
+            type: Type.STRING,
+            description: 'The name of the breathing technique (e.g., "Box Breathing", "Nadi Shodhana").',
           },
-          required: ['name', 'pattern'],
+          pattern: {
+            type: Type.STRING,
+            description: 'The breathing pattern (e.g., "Inhale 4s, Hold 4s, Exhale 4s, Hold 4s" or "Inhale Left, Exhale Right").',
+          },
         },
+        required: ['name', 'pattern'],
       },
-      {
-        name: 'setWalkingCadence',
-        description: 'Set the walking cadence (steps per minute) for the session to sync breathing.',
-        parameters: {
-          type: Type.OBJECT,
-          properties: {
-            spm: {
-              type: Type.NUMBER,
-              description: 'Steps per minute target.',
-            },
+    },
+    {
+      name: 'setWalkingCadence',
+      description: 'Set the walking cadence (steps per minute) for the session to sync breathing.',
+      parameters: {
+        type: Type.OBJECT,
+        properties: {
+          spm: {
+            type: Type.NUMBER,
+            description: 'Steps per minute target.',
           },
-          required: ['spm'],
         },
-      }
-    ],
-  },
-];
+        required: ['spm'],
+      },
+    }
+  ],
+} as const;
 
 export const getSystemInstruction = (prefs: UserPreferences, routineMode: RoutineMode) => {
   let nightProtocol = '';
