@@ -14,6 +14,8 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({ preferences, onComple
   const [step, setStep] = useState(0); // Start at 0 for Login
   const [tempPrefs, setTempPrefs] = useState<UserPreferences>(preferences);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [apiKey, setApiKey] = useState<string>(tempPrefs.geminiApiKey || '');
+  const [apiKeyError, setApiKeyError] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
@@ -26,7 +28,21 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({ preferences, onComple
   };
 
   const handleNext = () => setStep(step + 1);
-  const handleFinish = () => onComplete({ ...tempPrefs, hasOnboarded: true });
+  const handleFinish = () => onComplete({ ...tempPrefs, hasOnboarded: true, geminiApiKey: apiKey || null });
+
+  const validateAndProceed = () => {
+    setApiKeyError(null);
+    if (!apiKey || !apiKey.trim()) {
+      setApiKeyError("Please enter your Gemini API key or skip to use environment key (if configured).");
+      return;
+    }
+    if (!apiKey.startsWith('AIza')) {
+      setApiKeyError("Invalid API key format. Gemini keys start with 'AIza'");
+      return;
+    }
+    setTempPrefs({ ...tempPrefs, geminiApiKey: apiKey });
+    handleNext();
+  };
 
   const handleGoogleLogin = async () => {
     setAuthError(null);
@@ -140,6 +156,83 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({ preferences, onComple
         )}
 
         {step === 3 && (
+          <div className="animate-fade-in-up space-y-6 w-full">
+            <div className="w-20 h-20 bg-indigo-500/20 rounded-full flex items-center justify-center mx-auto border border-indigo-400/30">
+              <span className="text-4xl">🔑</span>
+            </div>
+            
+            <div className="text-center">
+              <h2 className="text-2xl font-semibold text-white mb-2">Bring Your Own Intelligence</h2>
+              <p className="text-slate-400 text-sm leading-relaxed max-w-md mx-auto">
+                RESPIRA runs entirely on your device (Client-Side). To power the AI, you provide your own Google Gemini API Key. 
+                <span className="text-green-400"> We never see it, store it on servers, or pay for it.</span>
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 p-5 rounded-2xl border border-slate-700 space-y-4">
+              <div>
+                <label className="block text-xs uppercase text-slate-400 font-semibold mb-2">
+                  Gemini API Key
+                </label>
+                <input
+                  type="password"
+                  value={apiKey}
+                  onChange={(e) => {
+                    setApiKey(e.target.value);
+                    setApiKeyError(null);
+                  }}
+                  placeholder="Paste key starting with AIza..."
+                  className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors font-mono text-sm"
+                />
+                <div className="flex items-center gap-2 mt-2">
+                  <svg className="w-3 h-3 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <p className="text-[10px] text-slate-500">Stored locally in browser localStorage</p>
+                </div>
+              </div>
+
+              {apiKeyError && (
+                <div className="p-3 bg-red-900/30 border border-red-500/30 rounded-lg">
+                  <p className="text-red-200 text-xs">{apiKeyError}</p>
+                </div>
+              )}
+
+              <a
+                href="https://aistudio.google.com/apikey"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                Get a free key from Google AI Studio
+              </a>
+            </div>
+
+            <div className="flex gap-3">
+              <button 
+                onClick={validateAndProceed}
+                className="flex-1 bg-indigo-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-indigo-500 transition-colors"
+              >
+                Save & Continue
+              </button>
+              <button
+                onClick={() => {
+                  setApiKey('');
+                  setTempPrefs({ ...tempPrefs, geminiApiKey: null });
+                  handleNext();
+                }}
+                className="px-6 py-3 text-slate-400 hover:text-white text-sm transition-colors"
+              >
+                Skip (Use Env)
+              </button>
+            </div>
+          </div>
+        )}
+
+        {step === 4 && (
           <div className="animate-fade-in-up space-y-8">
             <h2 className="text-2xl font-light text-white">System capabilities</h2>
             
@@ -175,7 +268,7 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({ preferences, onComple
 
         {/* Step dots */}
         <div className="flex gap-2 mt-8">
-          {[0, 1, 2, 3].map(i => (
+          {[0, 1, 2, 3, 4].map(i => (
             <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i === step ? 'bg-white' : 'bg-white/20'}`} />
           ))}
         </div>

@@ -33,6 +33,7 @@ export interface UserPreferences {
   breathingRatio: BreathingRatio;
   healthConditions: HealthCondition[];
   hasOnboarded: boolean;
+  geminiApiKey: string | null; // BYOK: User's personal Gemini API key
 }
 
 export interface AudioVisualizerData {

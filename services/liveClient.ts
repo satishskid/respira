@@ -43,10 +43,10 @@ export class LiveClient {
     this.isProcessing = true;
 
     try {
-      // API Key: Exclusively from process.env.API_KEY
-      const apiKey = process.env.API_KEY;
+      // API Key: Prioritize user's BYOK key from preferences, fallback to env for testing
+      const apiKey = preferences.geminiApiKey || process.env.API_KEY;
       if (!apiKey) {
-        throw new Error("Missing API Key. Ensure process.env.API_KEY is configured.");
+        throw new Error("Missing API Key. Please add your Gemini API key in Settings.");
       }
 
       this.ai = new GoogleGenAI({ apiKey });

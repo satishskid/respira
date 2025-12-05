@@ -1,0 +1,21 @@
+{
+  "name": "RESPIRA",
+  "short_name": "RESPIRA",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "description": "Bio-Rhythm Intelligence",
+  "icons": [
+    {
+      "src": "https://fonts.gstatic.com/s/i/materialicons/self_improvement/v6/24px.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "https://fonts.gstatic.com/s/i/materialicons/self_improvement/v6/24px.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -26,7 +26,8 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   ambientSound: 'rain',
   breathingRatio: '1:1',
   healthConditions: [],
-  hasOnboarded: false
+  hasOnboarded: false,
+  geminiApiKey: null // BYOK: User provides their own key
 };
 
 export const VOICE_OPTIONS = [

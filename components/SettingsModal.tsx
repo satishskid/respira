@@ -11,6 +11,10 @@ interface SettingsModalProps {
 }
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ preferences, onUpdate, isOpen, onClose }) => {
+  const [apiKeyInput, setApiKeyInput] = React.useState<string>('');
+  const [isEditingApiKey, setIsEditingApiKey] = React.useState(false);
+  const [apiKeyError, setApiKeyError] = React.useState<string | null>(null);
+
   if (!isOpen) return null;
 
   const handleChange = (key: keyof UserPreferences, value: any) => {
@@ -23,6 +27,27 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ preferences, onUpdate, is
       ? current.filter(c => c !== conditionId)
       : [...current, conditionId];
     handleChange('healthConditions', updated);
+  };
+
+  const handleApiKeyUpdate = () => {
+    setApiKeyError(null);
+    if (!apiKeyInput.trim()) {
+      setApiKeyError("API key cannot be empty");
+      return;
+    }
+    if (!apiKeyInput.startsWith('AIza')) {
+      setApiKeyError("Invalid format. Gemini keys start with 'AIza'");
+      return;
+    }
+    handleChange('geminiApiKey', apiKeyInput);
+    setIsEditingApiKey(false);
+    setApiKeyInput('');
+  };
+
+  const maskApiKey = (key: string | null) => {
+    if (!key) return 'Not set';
+    if (key.length < 10) return '••••••••';
+    return `${key.substring(0, 6)}...${key.substring(key.length - 4)}`;
   };
 
   return (
@@ -68,6 +93,84 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ preferences, onUpdate, is
                 </label>
               ))}
             </div>
+          </div>
+
+          {/* API Key Section */}
+          <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-4">
+            <h3 className="text-sm font-bold text-blue-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+              </svg>
+              Gemini API Key (BYOK)
+            </h3>
+            <p className="text-xs text-slate-400 mb-3">Your personal API key for AI voice coaching. Stored locally on your device only.</p>
+            
+            {!isEditingApiKey ? (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between bg-slate-800 rounded-lg p-3">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="text-sm text-slate-300 font-mono">{maskApiKey(preferences.geminiApiKey)}</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setIsEditingApiKey(true);
+                      setApiKeyInput(preferences.geminiApiKey || '');
+                    }}
+                    className="text-xs text-blue-400 hover:text-blue-300 font-medium"
+                  >
+                    Update
+                  </button>
+                </div>
+                <a
+                  href="https://aistudio.google.com/apikey"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300"
+                >
+                  Get API Key from Google AI Studio
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <input
+                  type="password"
+                  value={apiKeyInput}
+                  onChange={(e) => {
+                    setApiKeyInput(e.target.value);
+                    setApiKeyError(null);
+                  }}
+                  placeholder="AIza..."
+                  className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors font-mono text-sm"
+                />
+                {apiKeyError && (
+                  <p className="text-xs text-red-400">{apiKeyError}</p>
+                )}
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleApiKeyUpdate}
+                    className="flex-1 bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors font-medium"
+                  >
+                    Save Key
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsEditingApiKey(false);
+                      setApiKeyInput('');
+                      setApiKeyError(null);
+                    }}
+                    className="px-4 py-2 text-slate-400 hover:text-white text-sm transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Environment */}
