@@ -1,0 +1,7 @@
+{
+  "name": "RESPIRA",
+  "description": "Advanced bio-rhythm intelligence. Real-time breathwork and kinetic coaching powered by Gemini Live. Optimize your state.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
