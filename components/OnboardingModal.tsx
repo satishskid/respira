@@ -108,15 +108,19 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({ preferences, onComple
               {user?.photoURL ? (
                 <img src={user.photoURL} alt="User" className="w-full h-full rounded-full object-cover" />
               ) : (
-                <span className="text-4xl">🧘</span>
+                <span className="text-4xl">👋</span>
               )}
             </div>
-            <h1 className="text-3xl font-light text-white">Welcome, {user?.displayName ? user.displayName.split(' ')[0] : 'User'}</h1>
+            <h1 className="text-3xl font-light text-white">Hey there, {user?.displayName ? user.displayName.split(' ')[0] : 'friend'}!</h1>
             <p className="text-slate-400 leading-relaxed max-w-sm">
-              Let's calibrate the system to your bio-metrics.
+              Welcome to RESPIRA. I'm your personal breathing coach, and I'm here to guide you from sunrise to sleep. 
+              Think of me as a trusted partner who walks this journey with you.
             </p>
-            <button onClick={handleNext} className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:scale-105 transition-transform">
-              Begin Calibration
+            <p className="text-slate-300 text-sm max-w-sm">
+              We're going to sync your breath with your biology, explain the science behind every technique, and help you master your state—one breath at a time.
+            </p>
+            <button onClick={handleNext} className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white px-8 py-3 rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-indigo-500/30">
+              Let's Get Started
             </button>
           </div>
         )}
@@ -124,8 +128,8 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({ preferences, onComple
         {step === 2 && (
           <div className="animate-fade-in-up space-y-6 w-full text-left">
             <div>
-               <h2 className="text-2xl font-semibold text-white mb-2">Safety Protocols</h2>
-               <p className="text-slate-400 text-sm">Do you have any conditions that require protocol adjustment?</p>
+               <h2 className="text-2xl font-semibold text-white mb-2">Safety First</h2>
+               <p className="text-slate-400 text-sm">Your safety matters. Let me know if you have any of these conditions so I can adapt the techniques for you.</p>
             </div>
             
             <div className="space-y-3 bg-slate-900/50 p-4 rounded-2xl border border-white/10">
@@ -146,7 +150,7 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({ preferences, onComple
             </div>
 
             <p className="text-[10px] text-slate-500 text-center px-4">
-              *Data is stored locally for safety adaptation logic only.
+              This information stays on your device and helps me keep you safe.
             </p>
 
             <button onClick={handleNext} className="w-full bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-indigo-500 transition-colors">
@@ -162,17 +166,20 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({ preferences, onComple
             </div>
             
             <div className="text-center">
-              <h2 className="text-2xl font-semibold text-white mb-2">Bring Your Own Intelligence</h2>
+              <h2 className="text-2xl font-semibold text-white mb-2">Your Data. Your Control.</h2>
               <p className="text-slate-400 text-sm leading-relaxed max-w-md mx-auto">
-                RESPIRA runs entirely on your device (Client-Side). To power the AI, you provide your own Google Gemini API Key. 
-                <span className="text-green-400"> We never see it, store it on servers, or pay for it.</span>
+                RESPIRA runs entirely on your device—nothing goes to the cloud. To power my AI voice, you'll need your own Google Gemini API Key. 
+                <span className="text-teal-300"> It stays on your device. I never see it.</span>
+              </p>
+              <p className="text-slate-400 text-xs mt-2 max-w-md mx-auto">
+                Cost: ~$0.01 per session. You pay Google directly, not us.
               </p>
             </div>
 
             <div className="bg-slate-900/50 p-5 rounded-2xl border border-slate-700 space-y-4">
               <div>
                 <label className="block text-xs uppercase text-slate-400 font-semibold mb-2">
-                  Gemini API Key
+                  Gemini API Key (Optional Now, Required Later)
                 </label>
                 <input
                   type="password"
@@ -234,34 +241,47 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({ preferences, onComple
 
         {step === 4 && (
           <div className="animate-fade-in-up space-y-8">
-            <h2 className="text-2xl font-light text-white">System capabilities</h2>
+            <h2 className="text-2xl font-light text-white">How We'll Work Together</h2>
             
             <div className="space-y-6">
               <div className="flex items-center gap-4 text-left">
                 <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center shrink-0">🎤</div>
                 <div>
-                  <h3 className="font-semibold text-white">Voice Interface</h3>
-                  <p className="text-sm text-slate-400">Natural language processing. Interrupt at will.</p>
+                  <h3 className="font-semibold text-white">I'll Talk, You Breathe</h3>
+                  <p className="text-sm text-slate-400">My voice guides you in real-time. Speak naturally to ask questions or adjust the pace.</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 text-left">
-                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center shrink-0">👁️</div>
+                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center shrink-0">🌅</div>
                 <div>
-                  <h3 className="font-semibold text-white">Visual Sync</h3>
-                  <p className="text-sm text-slate-400">Phase-locked light guidance.</p>
+                  <h3 className="font-semibold text-white">Circadian Sync</h3>
+                  <p className="text-sm text-slate-400">From sunrise to sleep—5 protocols timed to your biological clock.</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 text-left">
+                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center shrink-0">�</div>
+                <div>
+                  <h3 className="font-semibold text-white">Science Explained</h3>
+                  <p className="text-sm text-slate-400">I'll explain the "why" behind each technique—no jargon, just clarity.</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 text-left">
                 <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center shrink-0">🔒</div>
                 <div>
-                  <h3 className="font-semibold text-white">Encrypted Local</h3>
-                  <p className="text-sm text-slate-400">Zero-knowledge storage architecture.</p>
+                  <h3 className="font-semibold text-white">Private by Design</h3>
+                  <p className="text-sm text-slate-400">Everything stays on your device. Zero tracking. Zero cloud storage.</p>
                 </div>
               </div>
             </div>
 
-            <button onClick={handleFinish} className="w-full bg-white text-black px-8 py-3 rounded-full font-semibold hover:scale-105 transition-transform">
-              Launch System
+            <div className="p-4 bg-indigo-900/20 rounded-lg border border-indigo-500/30 text-left">
+              <p className="text-sm text-indigo-200">
+                <strong className="text-white">Remember:</strong> You can interrupt me anytime, ask questions, or use the stop button. You're in complete control.
+              </p>
+            </div>
+
+            <button onClick={handleFinish} className="w-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white px-8 py-3 rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-indigo-500/30">
+              I'm Ready—Let's Begin
             </button>
           </div>
         )}

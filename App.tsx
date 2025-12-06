@@ -10,6 +10,8 @@ import SettingsModal from './components/SettingsModal';
 import HistoryModal from './components/HistoryModal';
 import OnboardingModal from './components/OnboardingModal';
 import ScienceModal from './components/ScienceModal';
+import AboutModal from './components/AboutModal';
+import CircadianClock from './components/CircadianClock';
 import BioIntelTicker from './components/BioIntelTicker';
 import { useBreathingMonitor } from './hooks/useBreathingMonitor';
 import { useStepCounter } from './hooks/useStepCounter';
@@ -28,6 +30,8 @@ const App: React.FC = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isScienceOpen, setIsScienceOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isCircadianClockOpen, setIsCircadianClockOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(false);
   
@@ -265,6 +269,16 @@ const App: React.FC = () => {
               </button>
            )}
 
+           <button onClick={() => setIsCircadianClockOpen(true)} className="p-2 rounded-full hover:bg-white/10 transition-colors" title="Circadian Clock">
+             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+             </svg>
+           </button>
+           <button onClick={() => setIsAboutOpen(true)} className="p-2 rounded-full hover:bg-white/10 transition-colors" title="About RESPIRA">
+             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+             </svg>
+           </button>
            <button onClick={() => setIsScienceOpen(true)} className="p-2 rounded-full hover:bg-white/10 transition-colors" title="Science & Methodology">
              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -471,10 +485,41 @@ const App: React.FC = () => {
         onClose={() => setIsScienceOpen(false)}
       />
 
+      <AboutModal 
+        isOpen={isAboutOpen}
+        onClose={() => setIsAboutOpen(false)}
+      />
+
       <HistoryModal
         isOpen={isHistoryOpen}
         onClose={() => setIsHistoryOpen(false)}
       />
+
+      {/* Circadian Clock Modal */}
+      {isCircadianClockOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-2xl shadow-2xl border border-indigo-500/20 p-6">
+            <button
+              onClick={() => setIsCircadianClockOpen(false)}
+              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors"
+              aria-label="Close"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <h2 className="text-2xl font-bold text-white mb-2">Your Circadian Clock</h2>
+            <p className="text-sm text-gray-400 mb-6">5 protocols synced to your biological rhythm</p>
+            <CircadianClock 
+              currentProtocol={routineMode}
+              onProtocolSelect={(protocolId) => {
+                setRoutineMode(protocolId as RoutineMode);
+                setIsCircadianClockOpen(false);
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Bio-Intel Daily Fact Ticker */}
       {preferences.hasOnboarded && connectionState === ConnectionState.DISCONNECTED && (

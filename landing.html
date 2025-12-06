@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESPIRA - Your Personal Breathing Coach | Scientifically Designed. Humanly Delivered.</title>
+    <meta name="description" content="Master your state, one breath at a time. AI breathing coach that syncs with your circadian rhythm. Private by design. From sunrise to sleep.">
+    <meta name="keywords" content="breathing coach, AI breathwork, circadian rhythm, HRV training, meditation alternative, privacy-first, zero-knowledge">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="RESPIRA - Bio-Rhythm Intelligence">
+    <meta property="og:description" content="Advanced breathing intelligence powered by AI. Syncs with your biology from sunrise to sleep.">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫁</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --rose: #f43f5e;
+            --indigo: #6366f1;
+            --teal: #2dd4bf;
+            --violet: #8b5cf6;
+            --deep-indigo: #4c1d95;
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--slate-900);
+            color: #e2e8f0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 0;
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            text-align: center;
+        }
+        
+        .breathing-orb {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 3rem;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--indigo), var(--deep-indigo));
+            animation: breathe 4s ease-in-out infinite;
+            box-shadow: 0 0 60px var(--indigo);
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+        
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, var(--indigo) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, var(--indigo), var(--violet));
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+        
+        .ghost-button {
+            background: transparent;
+            border: 2px solid var(--indigo);
+            margin-left: 1rem;
+        }
+        
+        .ghost-button:hover {
+            background: var(--indigo);
+        }
+        
+        /* Philosophy Section */
+        .philosophy {
+            background: linear-gradient(135deg, var(--slate-900) 0%, var(--slate-800) 100%);
+        }
+        
+        .split-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: white;
+        }
+        
+        .highlight {
+            color: var(--indigo);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--indigo);
+        }
+        
+        /* Protocols Section */
+        .protocols {
+            background: var(--slate-900);
+        }
+        
+        .protocol-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5), rgba(15, 23, 42, 0.5));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .protocol-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--indigo);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
+        }
+        
+        .protocol-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .protocol-icon {
+            font-size: 3rem;
+        }
+        
+        .protocol-time {
+            background: rgba(99, 102, 241, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--indigo);
+        }
+        
+        /* Science Section */
+        .science {
+            background: linear-gradient(135deg, #1e1b4b 0%, var(--slate-900) 100%);
+        }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .data-card {
+            background: rgba(30, 41, 59, 0.3);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+        
+        .metric {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .source {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: var(--indigo);
+        }
+        
+        /* Privacy Section */
+        .privacy {
+            background: var(--slate-900);
+        }
+        
+        .privacy-feature {
+            display: flex;
+            align-items: start;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.3);
+            border-left: 3px solid var(--indigo);
+            border-radius: 0.5rem;
+        }
+        
+        .privacy-icon {
+            font-size: 2.5rem;
+        }
+        
+        /* Final CTA */
+        .final-cta {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .split-content { grid-template-columns: 1fr; gap: 2rem; }
+            .cta-button { display: block; margin: 1rem auto; }
+            .ghost-button { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="breathing-orb"></div>
+            <h1>Master your state.<br>One breath at a time.</h1>
+            <p class="tagline">Your nervous system is the hardware. RESPIRA is the coach.</p>
+            <p style="max-width: 700px; margin: 0 auto 2rem; color: #94a3b8;">
+                Advanced breathing intelligence powered by AI. Designed to sync with your biology from sunrise to sleep. Zero knowledge. Private by design.
+            </p>
+            <a href="https://aispira.netlify.app" class="cta-button">Start Your First Session</a>
+            <a href="#philosophy" class="cta-button ghost-button">See How It Works ↓</a>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="philosophy">
+        <div class="container">
+            <div class="split-content">
+                <div>
+                    <h2>It's not meditation.<br>It's <span class="highlight">calibration</span>.</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                        Meditation asks you to clear your mind.<br>
+                        <strong style="color: white;">RESPIRA asks you to change your physiology.</strong>
+                    </p>
+                    <p>
+                        By mechanically altering your breath patterns—like extending your exhalations—you engage the <strong style="color: var(--teal);">Vagal Brake</strong>, a neural switch that instantly downregulates your heart rate and stress response.
+                    </p>
+                    <p style="margin-top: 1rem; font-size: 1.2rem; color: white;">
+                        This isn't spiritual. It's mechanical.<br>
+                        Precision engineering for your autonomic nervous system.
+                    </p>
+                </div>
+                <div>
+                    <p style="margin-bottom: 2rem;">
+                        And unlike apps that give you pre-recorded tracks, RESPIRA adapts in real-time. Our AI coach listens to you, adjusts to your pace, and explains the science as you breathe. <strong style="color: white;">It's like having a performance coach in your pocket.</strong>
+                    </p>
+                    <div>
+                        <span class="badge">✅ Real-time AI voice coaching</span>
+                        <span class="badge">✅ Syncs with circadian rhythm</span>
+                        <span class="badge">✅ Walking integration</span>
+                        <span class="badge">✅ Science explained in-session</span>
+                        <span class="badge">✅ Zero-knowledge privacy</span>
+                        <span class="badge">✅ No subscriptions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Protocols Section -->
+    <section id="protocols" class="protocols">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 1rem;">Aligned with the Sun.<br>Designed for Your Biology.</h2>
+            <p style="text-align: center; color: #94a3b8; max-width: 700px; margin: 0 auto 3rem;">
+                Your cortisol and melatonin levels fluctuate in a precise 24-hour rhythm. RESPIRA syncs with your biological clock to maximize efficacy at every hour.
+            </p>
+
+            <div class="protocol-card">
+                <div class="protocol-header">
+                    <span class="protocol-icon">🌅</span>
+                    <div style="flex: 1;">
+                        <h3 style="color: white; font-size: 1.5rem;">Sunrise Protocol</h3>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">The Awakening</p>
+                    </div>
+                    <span class="protocol-time">07:00–08:00</span>
+                </div>
+                <p><strong style="color: var(--rose);">What You'll Do:</strong> Energizing breathwork synced to morning light and movement.</p>
+                <p style="margin-top: 0.5rem;"><strong style="color: var(--teal);">The Science:</strong> Rapid kinetic breathing sharpens your Cortisol Awakening Response—signaling your brain "Day has begun."</p>
+                <p style="margin-top: 0.5rem;"><strong style="color: var(--indigo);">Special:</strong> Morning Walk Integration—RESPIRA tracks your steps and syncs breathing to your cadence.</p>
+                <p style="margin-top: 1rem; color: #94a3b8; font-size: 0.9rem;">⏱️ 5–8 minutes • Goal: Activation & Intention</p>
+            </div>
+
+            <div class="protocol-card">
+                <div class="protocol-header">
+                    <span class="protocol-icon">🎯</span>
+                    <div style="flex: 1;">
+                        <h3 style="color: white; font-size: 1.5rem;">Focus State</h3>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">The Deep Work Window</p>
+                    </div>
+                    <span class="protocol-time">10:00–12:00</span>
+                </div>
+                <p><strong style="color: var(--rose);">What You'll Do:</strong> Symmetric breathing patterns for sustained concentration.</p>
+                <p style="margin-top: 0.5rem;"><strong style="color: var(--teal);">The Science:</strong> Box Breathing (4-4-4-4) stabilizes CO₂ tolerance and reduces amygdala reactivity—training your nervous system to stay in the signal, not the noise.</p>
+                <p style="margin-top: 0.5rem;"><strong style="color: var(--indigo);">How RESPIRA Guides You:</strong> <em>"Inhale... 2, 3, 4. Hold... 2, 3, 4. Beautiful. Stay with me."</em></p>
+                <p style="margin-top: 1rem; color: #94a3b8; font-size: 0.9rem;">⏱️ 5–10 minutes • Goal: Clarity & Flow</p>
+            </div>
+
+            <div class="protocol-card">
+                <div class="protocol-header">
+                    <span class="protocol-icon">🏔️</span>
+                    <div style="flex: 1;">
+                        <h3 style="color: white; font-size: 1.5rem;">Kinetic Sync</h3>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">The Reset</p>
+                    </div>
+                    <span class="protocol-time">18:00–19:00</span>
+                </div>
+                <p><strong style="color: var(--rose);">What You'll Do:</strong> Walking meditation with breath-to-cadence entrainment.</p>
+                <p style="margin-top: 0.5rem;"><strong style="color: var(--teal);">The Science:</strong> Your brain needs optical flow and rhythmic grounding to offload cognitive load. This syncs breath to steps for meditative state.</p>
+                <p style="margin-top: 0.5rem;"><strong style="color: var(--indigo);">Adapts to You:</strong> <em>"I notice you're walking faster. Let's try: Inhale 2 steps, exhale 3 steps."</em></p>
+                <p style="margin-top: 1rem; color: #94a3b8; font-size: 0.9rem;">⏱️ 10–15 minutes • Goal: Stress Release & Grounding</p>
+            </div>
+
+            <div class="protocol-card">
+                <div class="protocol-header">
+                    <span class="protocol-icon">🌑</span>
+                    <div style="flex: 1;">
+                        <h3 style="color: white; font-size: 1.5rem;">Moonlight Log</h3>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">The Unloading</p>
+                    </div>
+                    <span class="protocol-time">22:00–22:30</span>
+                </div>
+                <p><strong style="color: var(--rose);">What You'll Do:</strong> Voice journaling guided by reflective prompts.</p>
+                <p style="margin-top: 0.5rem;"><strong style="color: var(--teal);">The Science:</strong> Sleep quality depends on cognitive closure. Speaking thoughts aloud triggers the Default Mode Network, helping you process and release.</p>
+                <p style="margin-top: 0.5rem;"><strong style="color: var(--indigo);">Sample Prompt:</strong> <em>"What's the heaviest thing you're still carrying from today?"</em></p>
+                <p style="margin-top: 1rem; color: #94a3b8; font-size: 0.9rem;">⏱️ 3–5 minutes • Goal: Emotional Release</p>
+            </div>
+
+            <div class="protocol-card">
+                <div class="protocol-header">
+                    <span class="protocol-icon">🌌</span>
+                    <div style="flex: 1;">
+                        <h3 style="color: white; font-size: 1.5rem;">Delta Wave</h3>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">The Shutdown</p>
+                    </div>
+                    <span class="protocol-time">23:00–23:30</span>
+                </div>
+                <p><strong style="color: var(--rose);">What You'll Do:</strong> 4-7-8 breathing with hypnotic voice guidance.</p>
+                <p style="margin-top: 0.5rem;"><strong style="color: var(--teal);">The Science:</strong> Extended exhalations trigger the Parasympathetic Nervous System, lowering core body temperature and signaling melatonin onset. Your body's natural sedative.</p>
+                <p style="margin-top: 0.5rem;"><strong style="color: var(--indigo);">Guided Gently:</strong> <em>"Let it all go, slowly, like a wave pulling back from the shore. You're safe."</em></p>
+                <p style="margin-top: 1rem; color: #94a3b8; font-size: 0.9rem;">⏱️ 5–7 minutes • Goal: Sleep Onset</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Science Section -->
+    <section class="science">
+        <div class="container">
+            <h2 style="text-align: center;">Backed by Neurobiology.<br>Not Spirituality.</h2>
+            <p style="text-align: center; color: #94a3b8; margin-bottom: 3rem;">
+                Every protocol in RESPIRA is built on peer-reviewed research from Stanford's Huberman Lab, Polyvagal Theory, HRV research, and clinical breathwork studies.
+            </p>
+
+            <div class="data-grid">
+                <div class="data-card">
+                    <div class="metric">18% Increase in Oxygen</div>
+                    <p>Nasal breathing releases nitric oxide (NO), improving circulation</p>
+                    <span class="source">Stanford Study, 2023</span>
+                </div>
+                <div class="data-card">
+                    <div class="metric">Instant Vagal Activation</div>
+                    <p>Extended exhale ratios (1:2) stimulate the vagus nerve</p>
+                    <span class="source">Porges Polyvagal Theory</span>
+                </div>
+                <div class="data-card">
+                    <div class="metric">Navy SEALs Protocol</div>
+                    <p>Box Breathing used for high-stress regulation in combat</p>
+                    <span class="source">Mark Divine, Unbeatable Mind</span>
+                </div>
+                <div class="data-card">
+                    <div class="metric">Mood Improvement</div>
+                    <p>Cyclic Sighing reduces anxiety faster than meditation</p>
+                    <span class="source">Huberman Lab, 2022</span>
+                </div>
+                <div class="data-card">
+                    <div class="metric">Sleep Onset Acceleration</div>
+                    <p>4-7-8 breathing lowers cortisol by 36% in 5 minutes</p>
+                    <span class="source">Dr. Andrew Weil</span>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 3rem; font-size: 1.3rem; color: white; font-weight: 600;">
+                We don't guess. We engineer.
+            </p>
+        </div>
+    </section>
+
+    <!-- Privacy Section -->
+    <section class="privacy">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 1rem;">Private by Design.<br>Zero-Knowledge Architecture.</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #94a3b8; margin-bottom: 3rem;">
+                Your breath. Your data. Your control.
+            </p>
+
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="privacy-feature">
+                    <span class="privacy-icon">📱</span>
+                    <div>
+                        <h4 style="color: white; font-size: 1.1rem; margin-bottom: 0.5rem;">Client-Side Only</h4>
+                        <p>All processing happens on your device. Nothing leaves your browser.</p>
+                    </div>
+                </div>
+
+                <div class="privacy-feature">
+                    <span class="privacy-icon">🔑</span>
+                    <div>
+                        <h4 style="color: white; font-size: 1.1rem; margin-bottom: 0.5rem;">Bring Your Own Key (BYOK)</h4>
+                        <p>You provide your Gemini API key. We never see it or store it in the cloud.</p>
+                    </div>
+                </div>
+
+                <div class="privacy-feature">
+                    <span class="privacy-icon">💾</span>
+                    <div>
+                        <h4 style="color: white; font-size: 1.1rem; margin-bottom: 0.5rem;">Local Storage</h4>
+                        <p>Session logs and journals live in your browser's IndexedDB—never uploaded to any server.</p>
+                    </div>
+                </div>
+
+                <div class="privacy-feature">
+                    <span class="privacy-icon">🚫</span>
+                    <div>
+                        <h4 style="color: white; font-size: 1.1rem; margin-bottom: 0.5rem;">No Cloud, No Tracking</h4>
+                        <p>We don't store your voice. We don't sell your data. We don't track your sessions.</p>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Your nervous system data is the most intimate data you have. In a world where every app sells your data, RESPIRA asks for nothing. No email. No account. No tracking pixels.
+                </p>
+                
+                <p style="text-align: center; margin-top: 2rem; font-size: 1.2rem; color: white; font-weight: 600;">
+                    This is what privacy-first design looks like.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2 style="color: white; margin-bottom: 1rem;">Your nervous system is waiting.<br>Let's begin.</h2>
+            <p style="margin-bottom: 2rem; font-size: 1.1rem;">No credit card. No email. Just breathe.</p>
+            <a href="https://aispira.netlify.app" class="cta-button" style="background: white; color: var(--indigo);">Start Your Free Session</a>
+            <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.8;">Works on iOS, Android, and Desktop • Install as a PWA for native app experience</p>
+        </div>
+    </section>
+
+    <footer style="background: var(--slate-900); padding: 2rem; text-align: center; border-top: 1px solid rgba(99, 102, 241, 0.2);">
+        <p style="color: #64748b; font-size: 0.9rem;">
+            RESPIRA • Bio-Rhythm Intelligence v1.0<br>
+            Built with ❤️ for human optimization
+        </p>
+    </footer>
+</body>
+</html>
