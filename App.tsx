@@ -49,6 +49,7 @@ const App: React.FC = () => {
 
   const liveClientRef = useRef<LiveClient | null>(null);
   const sessionStartTimeRef = useRef<number | null>(null);
+  const hasAutoStartedRef = useRef<boolean>(false); // Track if welcome session started
 
   useEffect(() => {
     // DB Init
@@ -73,6 +74,24 @@ const App: React.FC = () => {
       unsubscribe();
     };
   }, []);
+
+  // Auto-start welcome session after first onboarding
+  useEffect(() => {
+    if (preferences.hasOnboarded && !hasAutoStartedRef.current && connectionState === ConnectionState.DISCONNECTED) {
+      const shouldAutoStart = localStorage.getItem('respira_welcome_completed') !== 'true';
+      
+      if (shouldAutoStart) {
+        // Wait a bit for UI to settle, then auto-start
+        const timer = setTimeout(() => {
+          handleStartSession();
+          hasAutoStartedRef.current = true;
+          localStorage.setItem('respira_welcome_completed', 'true');
+        }, 1000);
+        
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [preferences.hasOnboarded, connectionState]);
 
   useEffect(() => {
     if (connectionState === ConnectionState.CONNECTED) {

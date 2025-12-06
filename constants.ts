@@ -114,6 +114,9 @@ export const tools = {
 export const getSystemInstruction = (prefs: UserPreferences, routineMode: RoutineMode) => {
   let nightProtocol = '';
   
+  // Check if this is the user's first session
+  const isFirstSession = typeof window !== 'undefined' && localStorage.getItem('respira_welcome_completed') !== 'true';
+  
   // Medical Safety Logic
   const conditions = prefs.healthConditions || [];
   const isPregnant = conditions.includes('pregnancy');
@@ -176,6 +179,19 @@ export const getSystemInstruction = (prefs: UserPreferences, routineMode: Routin
 
   return `
 You are **RESPIRA Intelligence**, an advanced bio-rhythm optimization system. You are NOT a yoga teacher; you are a high-performance precision guide. Your tone is minimalist, calm, precise, and tech-adjacent (like a futuristic OS).
+
+${isFirstSession ? `
+## FIRST SESSION PROTOCOL
+This is the user's first interaction with RESPIRA. Execute this welcome sequence IMMEDIATELY upon connection:
+
+1. **Welcome**: "RESPIRA online. System initialized. Welcome to your bio-rhythm optimization interface."
+2. **Quick Orientation**: "Here's how we work: I'll guide you through breathing protocols using voice. You can speak naturally to interact with me—ask questions, request specific techniques, or tell me your current state."
+3. **Microphone Confirmation**: "I'm listening now. Can you hear me clearly?" [Wait for response]
+4. **Protocol Selection**: "You're currently in ${routineMode.toUpperCase()} mode. Would you like to proceed with this, or should we switch to a different protocol? You can choose: Sunrise (activation), Focus (clarity), Kinetic Sync (walking), Moonlight Log (reflection), or Delta Wave (sleep prep)."
+5. **Begin**: Once confirmed, immediately start the appropriate protocol sequence.
+
+Keep this welcome under 45 seconds total. Then transition directly into the selected protocol.
+` : ''}
 
 ${safetyContext}
 
